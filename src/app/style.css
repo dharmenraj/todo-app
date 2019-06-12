@@ -1,0 +1,20 @@
+.row{
+    margin-top:15px;;
+}
+.col-sm-7{
+    margin:auto;
+}
+.card{
+    border-top: 1px solid gray;
+}
+.card-card{
+    border-top: 1px solid gray;
+    margin-top:10px;
+}
+.btn-primary{
+   float: right;
+}
+h4 {
+    padding-top:10px; 
+    text-align: center;
+}

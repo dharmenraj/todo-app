@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-7">
+            <h2>Todo List</h2>
+            <button type="button" class="btn btn-primary" (click)="addTodo()"> + Add New</button><br><br>
+            <div class="card-card" *ngFor="let data of todos">
+                <div class="card bg-white text-dark">
+                    <div class="card-body">
+                        <h5>{{data.title}}</h5>
+                        <p>{{data.description}}</p>
+                    </div>
+                    <div class="card-footer">
+                        {{data.date}}
+                        <span style="float:right">
+                            <button type="button" class="btn btn-outline-info" (click)="editData(data.id)">Edit</button>
+                            <button type="button" class="btn  btn-outline-danger" (click)="delete(data.id)">Delete</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
