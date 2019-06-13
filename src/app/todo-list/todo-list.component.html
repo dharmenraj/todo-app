@@ -10,7 +10,7 @@
                         <p>{{data.description}}</p>
                     </div>
                     <div class="card-footer">
-                        {{data.date}}
+                        {{data.eventTime | date: 'yyyy-MM-dd h:mm'}}
                         <span style="float:right">
                             <button type="button" class="btn btn-outline-info" (click)="editData(data.id)">Edit</button>
                             <button type="button" class="btn  btn-outline-danger" (click)="delete(data.id)">Delete</button>

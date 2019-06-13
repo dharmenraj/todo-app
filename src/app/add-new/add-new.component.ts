@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo.service';
+import { Todo } from '../todo';
 
 @Component({
   selector: 'app-add-new',
@@ -11,15 +12,16 @@ import { TodoService } from '../todo.service';
 export class AddNewComponent implements OnInit {
   addTodoForm: FormGroup;
   userMessage:string = '';
-
+  todo: Todo = new Todo();
   constructor(private router: Router,private formBuilder:FormBuilder,private todoService: TodoService) {
-    console.log(this.router.url.split('/')[2]);
-    if(this.router.url.split('/')[2] !== "new"){
-      this.getTaskData();
+    if(this.router.url.split('/')[2] !== "new"){ 
+       
     }
-   }
+  }
 
   ngOnInit() {  
+  
+    // to set the formdata
     this.addTodoForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
@@ -27,16 +29,22 @@ export class AddNewComponent implements OnInit {
     })
   }
 
+  // add new todo task
   addNew =() => {
     this.userMessage = '';
     if(this.addTodoForm.valid){
-      this.todoService.addNewTask(this.addTodoForm.value);
-    }else{
-      this.userMessage = "All fields are required!"
+      if (this.router.url.split("/")[2] !== "new") {
+        this.todoService.updateTask(this.router.url.split("/")[2], this.addTodoForm.value);
+      } else {
+        this.todoService.addNewTask(this.addTodoForm.value).subscribe(data => {
+          console.log(data);
+        });
+          this.todo = new Todo();
+          this.router.navigate(["/"]);
+      }
+    } else {
+        this.userMessage = "All fields are required!"
     }
   }
 
-  getTaskData =() =>{
-    
-  }
 }
