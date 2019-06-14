@@ -1,22 +1,72 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-7">
-            <h2>Todo List</h2>
-            <button type="button" class="btn btn-primary" (click)="addTodo()"> + Add New</button><br><br>
+        <div class="col-sm-6">
+            <h2 class="card-header">Todo List</h2>
+            <div class="row" id="right">
+                <button type="button" class="btn btn-primary" (click)="addTodo()"> + Add New</button> &nbsp;
+                <button type="button" class="btn btn-danger" (click)="deleteSelected()"> delete multiple</button>
+            </div>
             <div class="card-card" *ngFor="let data of todos">
                 <div class="card bg-white text-dark">
                     <div class="card-body">
                         <h5>{{data.title}}</h5>
                         <p>{{data.description}}</p>
+                        <span><input type="checkbox" (change)="selectedValue(data.id, $event.target.checked)"></span>
                     </div>
                     <div class="card-footer">
-                        {{data.eventTime | date: 'yyyy-MM-dd h:mm'}}
+                        {{data.eventTime | date: 'yyyy-MM-dd HH:mm:ss'}}
                         <span style="float:right">
-                            <button type="button" class="btn btn-outline-info" (click)="editData(data.id)">Edit</button>
-                            <button type="button" class="btn  btn-outline-danger" (click)="delete(data.id)">Delete</button>
+                            <button type="button" class="btn btn-outline-info"
+                                (click)="editModal.show();selectedItem(data.id)">Edit</button>&nbsp;
+                            <button type="button" class="btn  btn-outline-danger"
+                                (click)="delete(data.id)">Delete</button>
                         </span>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal -->
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">update</h5>
+                <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br>
+            <div class="modal-body">
+                <div class="alert alert-danger" role="alert" *ngIf="userMessage != ''">
+                    <strong>Invalid Data!</strong> {{userMessage}}
+                </div>
+                <form [formGroup]="addTodoForm">
+                    <div class="form-group">
+                        <label for="title"> title </label>
+                        <input type="text" class="form-control" formControlName="title" placeholder="title">
+                    </div>
+                    <div class="form-group">
+                        <label for="Description"> description </label>
+                        <textarea class="form-control" formControlName="description" rows="4"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 form-group">
+                            <label for="Date"> Date </label>
+                            <input type="date" class="form-control" formControlName="date" placeholder="date">
+                        </div>
+                        <div class="col-sm-6 form-group">
+                            <label for="time"> Time </label>
+                            <input type="time" class="form-control" formControlName="time" placeholder="date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" (click)="updateTask();editModal.hide()">Update</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

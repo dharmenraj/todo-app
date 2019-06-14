@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TodoService } from '../todo.service';
-import { Todo } from '../todo';
 
 @Component({
   selector: 'app-add-new',
@@ -12,20 +11,20 @@ import { Todo } from '../todo';
 export class AddNewComponent implements OnInit {
   addTodoForm: FormGroup;
   userMessage:string = '';
-  todo: Todo = new Todo();
+  todos: any;
+  selectedTdo;
+  selectedItem: any;
+
   constructor(private router: Router,private formBuilder:FormBuilder,private todoService: TodoService) {
-    if(this.router.url.split('/')[2] !== "new"){ 
-       
-    }
   }
 
   ngOnInit() {  
-  
-    // to set the formdata
+
     this.addTodoForm = this.formBuilder.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       date: ['', [Validators.required]],
+      time:['',[Validators.required]]
     })
   }
 
@@ -33,18 +32,20 @@ export class AddNewComponent implements OnInit {
   addNew =() => {
     this.userMessage = '';
     if(this.addTodoForm.valid){
-      if (this.router.url.split("/")[2] !== "new") {
-        this.todoService.updateTask(this.router.url.split("/")[2], this.addTodoForm.value);
-      } else {
+      var currnetDate = new Date();
+      var currnetTimestamp = currnetDate.getTime();
+      let eventTime = new Date(this.addTodoForm.value.date+" "+this.addTodoForm.value.time); // date and time to timestamp
+      if(eventTime.getTime() > currnetTimestamp){
+        this.addTodoForm.value.eventTime = eventTime.getTime(); 
         this.todoService.addNewTask(this.addTodoForm.value).subscribe(data => {
           console.log(data);
-        });
-          this.todo = new Todo();
           this.router.navigate(["/"]);
+        });
+      }else{
+        this.userMessage = "Time of the event should always be greater than the current time"
       }
     } else {
         this.userMessage = "All fields are required!"
     }
   }
-
 }

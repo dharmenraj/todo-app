@@ -1,20 +1,33 @@
-.row{
-    margin-top:15px;;
+.row {
+  margin-top: 15px;
 }
-.col-sm-7{
-    margin:auto;
+.col-sm-6 {
+  margin: auto;
 }
-.card{
-    border-top: 1px solid gray;
+.card-card {
+  margin-top: 10px;
 }
-.card-card{
-    border-top: 1px solid gray;
-    margin-top:10px;
-}
-.btn-primary{
-   float: right;
+#right {
+  margin-left: 500px;
 }
 h4 {
-    padding-top:10px; 
-    text-align: center;
+  padding-top: 10px;
+  text-align: center;
+}
+span {
+  float: right;
+}
+h2 {
+  color: steelblue;
+}
+
+.container-fluid {
+  background-size: cover;
+  background-color: #eeeeee;
+  position: fixed !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }

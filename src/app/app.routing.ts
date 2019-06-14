@@ -9,7 +9,7 @@ const routes: Routes = [
     component: TodoListComponent,
   },
   {
-    path: 'add-new/:type',
+    path: 'add-new',
     component: AddNewComponent,
   },
 ];
