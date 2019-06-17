@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import {RequestOptions, Request, RequestMethod} from '@angular/http';
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {  
-   url = 'http://192.168.1.172:8080/api/v1/todo-item';   
+  url = 'http://192.168.1.172:8080/api/v1/todo-item';   
+  headers =  new HttpHeaders({ 'Content-Type': 'application/json'});
 
   constructor(private http: HttpClient) { }
 
@@ -18,21 +19,23 @@ export class TodoService {
   }
 
   deleteTask = (id) => {
-    return this.http.delete(this.url +"/delete?id=" +id);
+    const options = {
+      headers: this.headers,
+      body: {
+        id: [id]
+      }
+    }
+    return this.http.delete(this.url +"/delete", options)
   }
 
   deleteMultiple =(id) =>{
-    let asdas ='';
-    let deleteUrl = "/delete?";
-    id.forEach((element, i) => {
-      asdas += "id="+element;
-      if(id.length !== i+1){
-        asdas += "&"; 
-      }
-    });
-    // console.log(this.url +deleteUrl+asdas);
-    return this.http.delete(this.url +deleteUrl+asdas);
-
+  const options = {
+    headers: this.headers,
+    body: {
+      id: id
+    }
+  }
+  return this.http.delete(this.url +"/delete", options)
   }
 
   updateTask =(id,data) => {

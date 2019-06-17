@@ -28,7 +28,7 @@ export class AddNewComponent implements OnInit {
     })
   }
 
-  // add new todo task
+  // add new todo item
   addNew =() => {
     this.userMessage = '';
     if(this.addTodoForm.valid){

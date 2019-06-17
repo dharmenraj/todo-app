@@ -76,16 +76,15 @@ export class TodoListComponent implements OnInit {
 
   }
 
-
   addTodo() {
     this.router.navigate(["/add-new"])
   }
 
   // delete single todo item
   delete = (id) =>{
-    console.log(id)
     this.todoService.deleteTask(id).subscribe( data => {
-      this.todos = this.todos.filter(todo => todo.id !== id);
+      this.getTaskData();
+      console.log(data);
     })
   }
 
@@ -107,6 +106,7 @@ export class TodoListComponent implements OnInit {
   deleteSelected =()=>{
     this.todoService.deleteMultiple(this.selectedIds).subscribe( data => {
       this.getTaskData();
+      console.log(data);
     })
   }
 }
